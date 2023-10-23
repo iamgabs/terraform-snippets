@@ -1,0 +1,221 @@
+{
+	// Snippets for terraform by Gabriel Carvalho
+	// github: github.com/iamgabs
+	"terraform-variables": {
+		// variable
+		"prefix": ["variable", "var"],
+		"body": [
+			"variable \"${1:nome-da-variavel}\" {",
+			"  type = \"$2\"",
+			"  default = \"$3\"",
+			"}"
+		],
+		"description": "variable for terraform"
+	},
+	"terraform-string-var": {
+		// variable type string
+		"prefix": "varstr",
+		"body": [
+			"variable \"${1:nome-da-variavel}\" {",
+			"  type = \"string\"",
+			"  default = \"\"",
+			"}"
+		],
+		"description": "string variable for terraform"
+	},
+	"terraform-number-var": {
+		// variable type number
+		"prefix": "varnum",
+		"body": [
+			"variable \"${1:nome-da-variavel}\" {",
+			"  type = \"number\"",
+			"  default = 0",
+			"}"
+		],
+		"description": "number variable for terraform"
+	},"terraform-google-disk-variable": {
+		// secondary disks
+		"prefix": ["pool-disks", "sec-disk", "vardisks"],
+		"body": [
+			"variable \"secondary-disks\" {",
+			"  type = map(object({",
+			"    type = string,",
+			"    size = number",
+			"  }))",
+			"  default = {",
+			"    ${1:\"disk1\"} = {",
+			"      type = \"${2:pd-type}\",",
+			"      size = ${3:10}",
+			"    },",
+			"    ${4:\"disk2\"} = {",
+			"      type = \"${5:pd-type}\",",
+			"      size = ${6:10}",
+			"    },",
+			"    ${7:\"disk3\"} = {",
+			"      type = \"${8:pd-type}\",",
+			"      size = ${9:10}",
+			"    },",
+			"    ${10:\"disk4\"} = {",
+			"      type = \"${11:pd-type}\",",
+			"      size = ${12:10}",
+			"    }",
+			"  }",
+			"}"
+		],
+		"description": "creates a pool of secondary disks in GCP with Terraform"
+	},
+	"terraform-compute-instance": {
+		// compute instance
+		"prefix": ["google_compute_instance", "compute_instance"],
+		"body": [
+			"resource \"google_compute_instance\" \"${1:example_instance}\" {",
+			"  name         = \"${2:instance-name}\"",
+			"  machine_type = \"${3:machine-type}\"",
+			"  zone         = \"${4:zone}\"",
+			"  boot_disk {",
+			"    initialize_params {",
+			"      image = \"${5:my-image}\"",
+			"    }",
+			"  }",
+			"  network_interface {",
+			"    network = \"${6:default}\"",
+			"  }",
+			"}",
+		],
+		"description": "creates a compute instance in gcp with terraform"
+	}, "terraform-google-vpc": {
+		// vpc
+		"prefix": ["terraform-google-vpc", "vpc", "compute_network"],
+		"body": [
+			"resource \"google_compute_network\" \"${1:example_network}\" {",
+			"  name = \"${2:network-name}\"",
+			"}",
+		],
+		"description": "creates a vpc in gcp with terraform"
+	},
+	"terraform-google-subnetwork": {
+		// subnetwork
+		"prefix": ["terraform-google-subnetwork", "sn", "compute_subnetwork"],
+		"body": [
+			"resource \"google_compute_subnetwork\" \"${1:example_subnet}\" {",
+			"  name          = \"${2:subnet-name}\"",
+			"  network       = google_compute_network.${3:example_network}.name",
+			"  ip_cidr_range = \"${4:my-ip-range}\"",
+			"  region        = \"${5:my-region}\"",
+			"}",
+		],
+		"description": "creates a subnetwork in gcp with terraform"
+	},
+	"terraform-google-disk": {
+		// disk
+		"prefix": ["terraform-google-disk", "disk", "compute_disk"],
+		"body": [
+			"resource \"google_compute_disk\" \"${1:example_disk}\" {",
+			"  name  = \"${2:disk-name}\"",
+			"  type  = \"${3:pd-type}\"",
+			"  size  = ${4:10}",
+			"  zone  = \"${5:my-zone}\"",
+			"}",
+		],
+		"description": "creates a subnetwork in gcp with terraform"
+	},"terraform-google-bucket": {
+		// bucket
+		"prefix": ["terraform-google-bucket", "bucket", "mb"],
+		"body": [
+			"resource \"google_storage_bucket\" \"${1:example_bucket}\" {",
+			"  name     = \"${2:my-bucket-name}\"",
+			"  location = \"${3:region}\"",
+			"}",
+		],
+		"description": "creates a bucket in gcp with terraform"
+	},"terraform-google-gke-node-pool": {
+		// gke node pool
+		"prefix": ["gke-node-pull", "gke-pool", "node_pool", "pool"],
+		"body": [
+			"resource \"google_container_node_pool\" \"${1:example_node_pool}\" {",
+			"  name       = \"${2:my-node-pool-name}\"",
+			"  location   = \"${3:zone}\"",
+			"  cluster    = google_container_cluster.${4:example_cluster}.name",
+			"  node_count = ${5:3}",
+			"}",
+		],
+		"description": "creates a node pool in gcp with terraform"
+	},"terraform-google-container-cluster": {
+		// gke cluster
+		"prefix": ["gke", "cluster", "gke-cluster"],
+		"body": [
+			"resource \"google_container_cluster\" \"${1:example_cluster}\" {",
+			"  name     = \"${2:my-cluster-name}\"",
+			"  location = \"${3:zone}\"",
+			"  initial_node_count = ${4:3}",
+			"  min_master_version = \"${5:latest}\"",
+			"  node_pool {",
+			"    name = \"${6:default-pool}\"",
+			"    machine_type = \"${7:machine-type}\"",
+			"    disk_size_gb = ${8:10}",
+			"  }",
+			"}",
+		],
+		"description": "creates a gke cluster in gcp with terraform"
+	}, "terraform-google-ip": {
+		// public ip
+		"prefix": "public-ip",
+		"body": [
+			"resource \"google_compute_address\" \"${1:example_ip}\" {",
+			"  name = \"${2:my-ip-name}\"",
+			"}",
+		],
+		"description": "creates a public IP in gcp with terraform"
+	},"terraform-google-cloud-sql": {
+		// cloud sql
+		"prefix": "cloud-sql",
+		"body": [
+			"resource \"google_sql_database_instance\" \"${1:example_instance}\" {",
+			"  name = \"${2:my-sql-version}\"",
+			"  database_version = \"${2:db-version}\"",
+			"  region = \"${4:my-region}\"",
+			"}",
+		],
+		"description": "creates a cloud sql instance in gcp with terraform"
+	},"terraform-google-firewall": {
+		// firewall rule 
+		"prefix": ["firewall", "firewall-rule", "rule"],
+		"body": [
+			"resource \"google_compute_firewall\" \"${1:example_firewall}\" {",
+			"  name = \"${2:my-firewall-name}\"",
+			"  network = \"${3:default}\"",
+			"  allow {",
+			"    protocol = \"${4:protocol}\"",
+			"    ports = [\"${5:port}\"]",
+			"  }",
+			"}",
+		],
+		"description": "creates a firewall rule instance in gcp with terraform"
+	},"terraform-google-lb": {
+		// load balance
+		"prefix": ["load-balancer", "lb"],
+		"body": [
+			"resource \"google_compute_region_backend_service\" \"${1:example_lb}\" {",
+			"  name = \"${2:my-lb-name}\"",
+			"  protocol = \"${3:my-protocol}\"",
+			"  backend {",
+			"    default = google_compute_instance_group.${4:example_group}.name",
+			"  }",
+			"  health_checks = [\"${5:google_compute_health_check.example.name}\"]",
+			"  location = \"${6:region}\"",
+			"}",
+		],
+		"description": "creates load balancer in gcp with terraform"
+	},"terraform-google-attach-disk": {
+		// attach disks 
+		"prefix": "attach-disk",
+		"body": [
+			"resource \"google_compute_attached_disk\" \"${1:example_disk}\" {",
+			"  disk = \"${2:disk-resource-name}\"",
+			"  instance = \"${3:instance-resource-name}\"",
+			"}",
+		],
+		"description": "attach disks in gcp with terraform"
+	}
+	
+}
