@@ -1,4 +1,4 @@
-# VSCODE Terraform Snippets
+# VSCode Terraform Snippets
 
 ## Como utilizar? 
 > 1º Vá até o vscode e clique em "Arquivo"
