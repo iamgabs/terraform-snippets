@@ -1,0 +1,24 @@
+{
+    "name": "terraform-gcp-snippets", 
+    "displayName": "Terraform Snippets",
+    "version": "1.0.0", 
+    "description": "Snippets for Terraform in VSCode", 
+    "publisher": "iamgabs",
+    "engines": {
+      "vscode": "^1.0.0"
+    },
+    "main": "extension.js",
+    "categories": ["Snippets", "Other"],
+    "contributes": {
+      "snippets": [
+        {
+          "language": "terraform", 
+          "path": "./snippets/snippets.code-snippets" 
+        }
+      ]
+    },
+    "icon": "icon.png", 
+    "activationEvents": ["onLanguage:terraform"],
+    "repository": "https://github.com/iamgabs/terraform-snippets"
+  }
+  
